@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page</title>
+  <title>Jollibee - Login</title>
   <style>
     body {
       margin: 0;
@@ -49,20 +49,16 @@
       opacity: 0.9;
     }
 
-    .login-html .sign-in-htm,
-    .login-html .sign-up-htm {
+    .login-html .sign-in-htm {
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
       position: absolute;
-      transform: rotateY(180deg);
       backface-visibility: hidden;
-      transition: all .4s linear;
     }
 
     .login-html .sign-in,
-    .login-html .sign-up,
     .login-form .group .check {
       display: none;
     }
@@ -82,8 +78,7 @@
       border-bottom: 2px solid transparent;
     }
 
-    .login-html .sign-in:checked + .tab,
-    .login-html .sign-up:checked + .tab {
+    .login-html .sign-in:checked + .tab {
       color: #660000;
       border-color: #660000;
     }
@@ -91,8 +86,6 @@
     .login-form {
       min-height: 345px;
       position: relative;
-      perspective: 1000px;
-      transform-style: preserve-3d;
     }
 
     .login-form .group {
@@ -121,6 +114,7 @@
       border-radius: 25px;
       background: #660000;
       color: #fff;
+      cursor: pointer;
     }
 
     .login-form .group input[data-type="password"] {
@@ -130,14 +124,6 @@
     .login-form .group .label {
       color: #660000;
       font-size: 12px;
-    }
-
-    .login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm {
-      transform: rotate(0);
-    }
-
-    .login-html .sign-up:checked + .tab + .login-form .sign-up-htm {
-      transform: rotate(0);
     }
 
     .hr {
@@ -151,19 +137,27 @@
     }
 
     .input { outline: none; }
+    .role-select {
+      width: 100%;
+      padding: 13px 20px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, .6);
+      color: #660000;
+      border: none;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
   <p>
-    <img src="http://photocdn.sohu.com/20120203/Img333655520.jpg" alt="Welcome Image">
+    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500&h=400&fit=crop" alt="Jollibee Food">
   </p>
   <div class="login-wrap">
     <div class="login-html">
-      <h1>WELCOME</h1>
+      <h1>JOLLIBEE ORDER SYSTEM</h1>
       <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
       <label for="tab-1" class="tab">Sign In</label>
-      <input id="tab-2" type="radio" name="tab" class="sign-up">
-      <label for="tab-2" class="tab">Sign Up</label>
       <div class="login-form">
         <div class="sign-in-htm">
           <div class="group">
@@ -173,6 +167,14 @@
           <div class="group">
             <label for="pass" class="label">Password</label>
             <input id="pass" type="password" class="input" data-type="password">
+          </div>
+          <div class="group">
+            <label for="role" class="label">Role</label>
+            <select id="role" class="role-select">
+              <option value="customer">Customer</option>
+              <option value="staff">Staff</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
           <div class="group">
             <input id="check" type="checkbox" class="check" checked>
@@ -186,61 +188,38 @@
             <a href="#forgot">Forgot Password?</a>
           </div>
         </div>
-        <div class="sign-up-htm">
-          <div class="group">
-            <label for="user" class="label">Username</label>
-            <input id="user" type="text" class="input">
-          </div>
-          <div class="group">
-            <label for="pass" class="label">Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
-          </div>
-          <div class="group">
-            <label for="pass" class="label">Repeat Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
-          </div>
-          <div class="group">
-            <label for="pass" class="label">Email Address</label>
-            <input id="pass" type="text" class="input">
-          </div>
-          <div class="group">
-            <button class="button">Sign Up</button>
-          </div>
-          <div class="hr"></div>
-          <div class="foot-lnk">
-            <label for="tab-1">Already Member?</label>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
-  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   <script>
-    const e = React.createElement;
-
-    class SignIn extends React.Component {
-      constructor(props) {
-        super(props);
-        this.state = { log: false };
+    document.getElementById('signInButton').addEventListener('click', function() {
+      const username = document.getElementById('user').value;
+      const password = document.getElementById('pass').value;
+      const role = document.getElementById('role').value;
+      
+      if (!username || !password) {
+        alert('Please enter both username and password');
+        return;
       }
 
-      render() {
-        if (this.state.log) {
-          window.location.href = "http://127.0.0.1:5500/index.html";
-        }
+      // Store user info in localStorage
+      localStorage.setItem('currentUser', JSON.stringify({
+        username,
+        role,
+        loginTime: new Date().toISOString()
+      }));
 
-        return e(
-          'button',
-          { onClick: () => this.setState({ log: true }) },
-          'Sign In'
-        );
+      // Redirect to main app
+      window.location.href = 'index.html';
+    });
+
+    // Enter key support
+    document.getElementById('pass').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        document.getElementById('signInButton').click();
       }
-    }
-
-    const domContainer = document.querySelector('#signInButton');
-    ReactDOM.render(e(SignIn), domContainer);
+    });
   </script>
 </body>
 </html>
