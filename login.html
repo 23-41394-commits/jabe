@@ -4,221 +4,587 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jollibee - Login</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
       margin: 0;
-      color: #888888;
-      background: #330000;
-      font: 600 16px/18px 'Open Sans', sans-serif;
+      padding: 0;
+      box-sizing: border-box;
     }
-    *,:after,:before { box-sizing: border-box; }
-    .clearfix:after, .clearfix:before { content: ''; display: table; }
-    .clearfix:after { clear: both; display: block; }
-    a { color: inherit; text-decoration: none; }
-
-    img {
-      width: 500px;
-      position: relative;
-      top: 100px;
-      left: 50px;
-      margin: auto;
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #d10000 0%, #8b0000 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
-
-    h1 {
-      color: #660000;
-      text-align: center;
-      line-height: 60px;
-    }
-
-    .login-wrap {
-      width: 550px;
-      margin: auto;
-      min-height: 790px;
-      position: absolute;
-      top: 120px;
-      left: 600px;
-      box-shadow: 0 12px 15px 0 #ffffcc, 0 17px 50px 0;
-    }
-
-    .login-html {
+    
+    .login-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(209, 0, 0, 0.3);
+      overflow: hidden;
       width: 100%;
-      height: 100%;
-      position: absolute;
-      padding: 90px 70px 50px 70px;
-      background: #ffff99;
-      opacity: 0.9;
+      max-width: 440px;
+      transition: transform 0.3s ease;
     }
-
-    .login-html .sign-in-htm {
+    
+    .login-container:hover {
+      transform: translateY(-5px);
+    }
+    
+    .login-header {
+      background: linear-gradient(135deg, #d10000 0%, #8b0000 100%);
+      padding: 40px 30px 30px;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    
+    .login-header::before {
+      content: '';
+      position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      bottom: 0;
-      position: absolute;
-      backface-visibility: hidden;
+      height: 4px;
+      background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
     }
-
-    .login-html .sign-in,
-    .login-form .group .check {
-      display: none;
+    
+    .logo {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
-
-    .login-html .tab,
-    .login-form .group .label,
-    .login-form .group .button {
-      text-transform: uppercase;
+    
+    .login-header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 5px;
     }
-
-    .login-html .tab {
-      font-size: 22px;
-      margin-right: 15px;
-      padding-bottom: 5px;
-      margin: 0 30px 25px 0;
-      display: inline-block;
-      border-bottom: 2px solid transparent;
+    
+    .login-header p {
+      opacity: 0.9;
+      font-size: 0.95rem;
     }
-
-    .login-html .sign-in:checked + .tab {
-      color: #660000;
-      border-color: #660000;
-    }
-
+    
     .login-form {
-      min-height: 345px;
+      padding: 40px 30px;
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
       position: relative;
     }
-
-    .login-form .group {
-      margin-bottom: 20px;
-    }
-
-    .login-form .group .label,
-    .login-form .group .input,
-    .login-form .group .button {
-      width: 100%;
+    
+    .form-group label {
       display: block;
-      font-size: 18px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.9rem;
     }
-
-    .login-form .group .input {
-      border: none;
-      padding: 13px 20px;
-      border-radius: 25px;
-      background: rgba(255, 255, 255, .6);
-      color: #660000;
+    
+    .input-with-icon {
+      position: relative;
     }
-
-    .login-form .group .button {
-      border: none;
-      padding: 13px 20px;
-      border-radius: 25px;
-      background: #660000;
-      color: #fff;
-      cursor: pointer;
+    
+    .input-with-icon i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #d10000;
+      z-index: 2;
     }
-
-    .login-form .group input[data-type="password"] {
-      -webkit-text-security: circle;
+    
+    .form-control {
+      width: 100%;
+      padding: 15px 15px 15px 45px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: #f8fafc;
     }
-
-    .login-form .group .label {
-      color: #660000;
-      font-size: 12px;
+    
+    .form-control:focus {
+      outline: none;
+      border-color: #d10000;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.1);
     }
-
-    .hr {
-      height: 2px;
-      margin: 60px 0 50px 0;
-      background: #660000;
+    
+    .form-control.error {
+      border-color: #e53e3e;
+      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1);
     }
-
-    .foot-lnk {
-      text-align: center;
-    }
-
-    .input { outline: none; }
+    
     .role-select {
       width: 100%;
-      padding: 13px 20px;
-      border-radius: 25px;
-      background: rgba(255, 255, 255, .6);
-      color: #660000;
+      padding: 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: #f8fafc;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 15px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+    }
+    
+    .role-select:focus {
+      outline: none;
+      border-color: #d10000;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(209, 0, 0, 0.1);
+    }
+    
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+    
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-right: 10px;
+      accent-color: #d10000;
+    }
+    
+    .checkbox-group label {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #4a5568;
+      cursor: pointer;
+    }
+    
+    .login-button {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #d10000 0%, #8b0000 100%);
+      color: white;
       border: none;
-      font-size: 18px;
-      margin-bottom: 20px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(209, 0, 0, 0.3);
+    }
+    
+    .login-button:active {
+      transform: translateY(0);
+    }
+    
+    .login-button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 30px 0;
+      color: #718096;
+      font-size: 0.9rem;
+    }
+    
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+    
+    .divider::before {
+      margin-right: 15px;
+    }
+    
+    .divider::after {
+      margin-left: 15px;
+    }
+    
+    .demo-accounts {
+      background: #f7fafc;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 25px;
+    }
+    
+    .demo-accounts h3 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #4a5568;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    
+    .demo-account {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .demo-account:last-child {
+      border-bottom: none;
+    }
+    
+    .demo-account .role {
+      font-weight: 600;
+      color: #d10000;
+      font-size: 0.85rem;
+    }
+    
+    .demo-account .credentials {
+      font-size: 0.8rem;
+      color: #718096;
+    }
+    
+    .error-message {
+      color: #e53e3e;
+      font-size: 0.85rem;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid transparent;
+      border-top: 2px solid white;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .forgot-password {
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .forgot-password a {
+      color: #d10000;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s ease;
+    }
+    
+    .forgot-password a:hover {
+      color: #8b0000;
+      text-decoration: underline;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .login-container {
+        border-radius: 15px;
+      }
+      
+      .login-header {
+        padding: 30px 20px 25px;
+      }
+      
+      .login-header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .login-form {
+        padding: 30px 20px;
+      }
+      
+      .logo {
+        font-size: 2rem;
+      }
+    }
+    
+    @media (max-width: 360px) {
+      body {
+        padding: 10px;
+      }
+      
+      .login-header {
+        padding: 25px 15px 20px;
+      }
+      
+      .login-form {
+        padding: 25px 15px;
+      }
     }
   </style>
 </head>
 <body>
-  <p>
-    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500&h=400&fit=crop" alt="Jollibee Food">
-  </p>
-  <div class="login-wrap">
-    <div class="login-html">
-      <h1>JOLLIBEE ORDER SYSTEM</h1>
-      <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-      <label for="tab-1" class="tab">Sign In</label>
-      <div class="login-form">
-        <div class="sign-in-htm">
-          <div class="group">
-            <label for="user" class="label">Username</label>
-            <input id="user" type="text" class="input">
-          </div>
-          <div class="group">
-            <label for="pass" class="label">Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
-          </div>
-          <div class="group">
-            <label for="role" class="label">Role</label>
-            <select id="role" class="role-select">
-              <option value="customer">Customer</option>
-              <option value="staff">Staff</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-          <div class="group">
-            <input id="check" type="checkbox" class="check" checked>
-            <label for="check"><span class="icon"></span> Keep me Signed in</label>
-          </div>
-          <div class="group">
-            <button id="signInButton" class="button">Sign In</button>
-          </div>
-          <div class="hr"></div>
-          <div class="foot-lnk">
-            <a href="#forgot">Forgot Password?</a>
-          </div>
+  <div class="login-container">
+    <!-- Header Section -->
+    <div class="login-header">
+      <div class="logo">🍗</div>
+      <h1>Jollibee Order System</h1>
+      <p>Sign in to your account</p>
+    </div>
+    
+    <!-- Login Form -->
+    <form class="login-form" id="loginForm">
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="username">Username</label>
+        <div class="input-with-icon">
+          <i class="fas fa-user"></i>
+          <input 
+            type="text" 
+            id="username" 
+            class="form-control" 
+            placeholder="Enter your username"
+            required
+          >
+        </div>
+        <div class="error-message" id="usernameError">Please enter a valid username</div>
+      </div>
+      
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-with-icon">
+          <i class="fas fa-lock"></i>
+          <input 
+            type="password" 
+            id="password" 
+            class="form-control" 
+            placeholder="Enter your password"
+            required
+          >
+        </div>
+        <div class="error-message" id="passwordError">Please enter your password</div>
+      </div>
+      
+      <!-- Role Selection -->
+      <div class="form-group">
+        <label for="role">Select Role</label>
+        <select id="role" class="role-select" required>
+          <option value="">Choose your role...</option>
+          <option value="customer">Customer</option>
+          <option value="staff">Staff</option>
+          <option value="admin">Admin</option>
+        </select>
+        <div class="error-message" id="roleError">Please select your role</div>
+      </div>
+      
+      <!-- Remember Me -->
+      <div class="checkbox-group">
+        <input type="checkbox" id="rememberMe" checked>
+        <label for="rememberMe">Keep me signed in</label>
+      </div>
+      
+      <!-- Login Button -->
+      <button type="submit" class="login-button" id="loginButton">
+        <span>Sign In</span>
+        <div class="loading-spinner" id="loadingSpinner"></div>
+      </button>
+      
+      <!-- Demo Accounts -->
+      <div class="demo-accounts">
+        <h3>Demo Accounts</h3>
+        <div class="demo-account">
+          <span class="role">Customer</span>
+          <span class="credentials">customer1 / pass123</span>
+        </div>
+        <div class="demo-account">
+          <span class="role">Staff</span>
+          <span class="credentials">staff1 / pass123</span>
+        </div>
+        <div class="demo-account">
+          <span class="role">Admin</span>
+          <span class="credentials">admin / admin123</span>
         </div>
       </div>
-    </div>
+      
+      <!-- Forgot Password -->
+      <div class="forgot-password">
+        <a href="#forgot">Forgot your password?</a>
+      </div>
+    </form>
   </div>
 
   <script>
-    document.getElementById('signInButton').addEventListener('click', function() {
-      const username = document.getElementById('user').value;
-      const password = document.getElementById('pass').value;
-      const role = document.getElementById('role').value;
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginForm = document.getElementById('loginForm');
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const roleSelect = document.getElementById('role');
+      const loginButton = document.getElementById('loginButton');
+      const loadingSpinner = document.getElementById('loadingSpinner');
       
-      if (!username || !password) {
-        alert('Please enter both username and password');
-        return;
+      // Demo accounts data
+      const demoAccounts = {
+        'customer1': { password: 'pass123', role: 'customer' },
+        'staff1': { password: 'pass123', role: 'staff' },
+        'admin': { password: 'admin123', role: 'admin' }
+      };
+      
+      // Form validation function
+      function validateForm() {
+        let isValid = true;
+        
+        // Validate username
+        if (!usernameInput.value.trim()) {
+          showError('usernameError', 'Please enter your username');
+          usernameInput.classList.add('error');
+          isValid = false;
+        } else {
+          hideError('usernameError');
+          usernameInput.classList.remove('error');
+        }
+        
+        // Validate password
+        if (!passwordInput.value.trim()) {
+          showError('passwordError', 'Please enter your password');
+          passwordInput.classList.add('error');
+          isValid = false;
+        } else {
+          hideError('passwordError');
+          passwordInput.classList.remove('error');
+        }
+        
+        // Validate role
+        if (!roleSelect.value) {
+          showError('roleError', 'Please select your role');
+          roleSelect.classList.add('error');
+          isValid = false;
+        } else {
+          hideError('roleError');
+          roleSelect.classList.remove('error');
+        }
+        
+        return isValid;
       }
-
-      // Store user info in localStorage
-      localStorage.setItem('currentUser', JSON.stringify({
-        username,
-        role,
-        loginTime: new Date().toISOString()
-      }));
-
-      // Redirect to main app
-      window.location.href = 'index.html';
-    });
-
-    // Enter key support
-    document.getElementById('pass').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        document.getElementById('signInButton').click();
+      
+      function showError(errorId, message) {
+        const errorElement = document.getElementById(errorId);
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
       }
+      
+      function hideError(errorId) {
+        const errorElement = document.getElementById(errorId);
+        errorElement.style.display = 'none';
+      }
+      
+      // Login function
+      function performLogin(username, password, role) {
+        // Simulate API call delay
+        loginButton.disabled = true;
+        loadingSpinner.style.display = 'block';
+        loginButton.querySelector('span').textContent = 'Signing In...';
+        
+        setTimeout(() => {
+          // Check credentials against demo accounts
+          if (demoAccounts[username] && 
+              demoAccounts[username].password === password && 
+              demoAccounts[username].role === role) {
+            
+            // Successful login
+            const userData = {
+              username: username,
+              role: role,
+              loginTime: new Date().toISOString()
+            };
+            
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            
+            // Show success message
+            alert(`Welcome back, ${username}! Redirecting to dashboard...`);
+            
+            // Redirect to main application
+            window.location.href = 'index.html';
+            
+          } else {
+            // Failed login
+            showError('passwordError', 'Invalid username, password, or role selection');
+            passwordInput.classList.add('error');
+            loginButton.disabled = false;
+            loadingSpinner.style.display = 'none';
+            loginButton.querySelector('span').textContent = 'Sign In';
+          }
+        }, 1500);
+      }
+      
+      // Form submission handler
+      loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (validateForm()) {
+          const username = usernameInput.value.trim();
+          const password = passwordInput.value;
+          const role = roleSelect.value;
+          
+          performLogin(username, password, role);
+        }
+      });
+      
+      // Real-time validation
+      usernameInput.addEventListener('input', function() {
+        if (this.value.trim()) {
+          hideError('usernameError');
+          this.classList.remove('error');
+        }
+      });
+      
+      passwordInput.addEventListener('input', function() {
+        if (this.value.trim()) {
+          hideError('passwordError');
+          this.classList.remove('error');
+        }
+      });
+      
+      roleSelect.addEventListener('change', function() {
+        if (this.value) {
+          hideError('roleError');
+          this.classList.remove('error');
+        }
+      });
+      
+      // Enter key support
+      document.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          loginForm.dispatchEvent(new Event('submit'));
+        }
+      });
+      
+      // Auto-fill demo accounts for testing
+      usernameInput.addEventListener('focus', function() {
+        if (!this.value) {
+          this.placeholder = 'Try: customer1, staff1, or admin';
+        }
+      });
+      
+      usernameInput.addEventListener('blur', function() {
+        this.placeholder = 'Enter your username';
+      });
     });
   </script>
 </body>
