@@ -1,14 +1,31 @@
 [build]
   publish = "."
+  command = "echo 'No build needed for static site'"
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/"
+  to = "/customer-login.html"
   status = 200
 
 [[redirects]]
   from = "/login"
-  to = "/login.html"
+  to = "/customer-login.html"
+  status = 200
+
+[[redirects]]
+  from = "/staff"
+  to = "/staff-login.html"
+  status = 200
+
+[[redirects]]
+  from = "/app"
+  to = "/index.html"
+  status = 200
+
+# API proxies for when you add backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-backend-url.vercel.app/api/:splat"
   status = 200
 
 # Security headers
@@ -26,8 +43,6 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000"
 
-# Disable caching for HTML files
-[[headers]]
-  for = "/*.html"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
+[dev]
+  publish = "."
+  port = 3000
